@@ -1,0 +1,27 @@
+digraph CC_CUCB {
+  graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.55, pad=0.2, bgcolor="white"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, color="#4A5568", penwidth=1.2, width=2.65, height=1.05, fixedsize=true];
+  edge [color="#4A5568", penwidth=1.25, arrowsize=0.8];
+
+  A [label="1. DATA AUDIT\n60 tasks • 44 workers\n900 observed annotations", fillcolor="#DCEAF7"];
+  B [label="2. TASK CONTEXT\nTopic indicators\nStandardized log document length", fillcolor="#E5F2EC"];
+  C [label="3. ELIGIBLE POOL\n15 observed workers per task\nBinary relevance reward", fillcolor="#FFF0D8"];
+  D [label="4. INITIALIZE MODELS\nAⱼ = λI, bⱼ = 0\nOne ridge model per worker", fillcolor="#F1E6F4"];
+  E [label="5. CONTEXTUAL UCB\nEstimate θ̂ⱼ and confidence bonus\nRank eligible workers", fillcolor="#DCEAF7"];
+  F [label="6. TOP-K SELECTION\nSelect K = 5 workers\nCardinality-constrained action", fillcolor="#E5F2EC"];
+  G [label="7. SEMI-BANDIT FEEDBACK\nObserve selected workers' rewards\nNo imputation of missing pairs", fillcolor="#FFF0D8"];
+  H [label="8. MODEL UPDATE\nAⱼ ← Aⱼ + xxᵀ\nbⱼ ← bⱼ + rⱼx", fillcolor="#F1E6F4"];
+  I [label="9. EVALUATION\n30 runs × 500 decisions\nReward, oracle regret, statistics", fillcolor="#DCEAF7"];
+
+  {rank=same; A; B; C;}
+  {rank=same; D; E; F;}
+  {rank=same; G; H; I;}
+
+  A -> B [constraint=false]; B -> C [constraint=false];
+  D -> E [constraint=false]; E -> F [constraint=false];
+  G -> H [constraint=false]; H -> I [constraint=false];
+  C -> D [constraint=false, minlen=1]; F -> G [constraint=false, minlen=1];
+  A -> D [style=invis, weight=100]; D -> G [style=invis, weight=100];
+  B -> E [style=invis, weight=100]; E -> H [style=invis, weight=100];
+  C -> F [style=invis, weight=100]; F -> I [style=invis, weight=100];
+}
